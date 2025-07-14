@@ -1,0 +1,150 @@
+:root {
+  --dark-blue: #3E5BA9;
+  --light-blue: #5D79D0;
+  --white: #FFFFFF;
+  --dark-gray: #2E2E2E;
+  --light-gray: #F2F2F2;
+  --black: #000000;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--white);
+  color: var(--dark-gray);
+  line-height: 1.6;
+}
+
+.course-overview {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.course-overview h2 {
+  color: rgb(40, 64, 135); 
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.course-subtext {
+  text-align: center;
+  font-size: 1.05rem;
+  color: var(--light-blue); 
+  margin-bottom: 2rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Grid Layout */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Feature Card */
+.feature-card {
+  background-color: var(--white);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e3e9fb;
+  box-shadow: 0 4px 14px rgba(62, 91, 169, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 24px rgba(62, 91, 169, 0.2);
+}
+
+/* Image Styling */
+.feature-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  background-color: var(--light-gray);
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Text Below Image */
+.feature-info {
+  flex: 1;
+  padding: 1.2rem;
+  text-align: center;
+  background: linear-gradient(to bottom right, #f0f4ff, #e8edff); /* ✅ Bluish BG Full Width */
+  width: 100%; 
+  box-sizing: border-box;
+  border-top: 1px solid #d0dbf2;
+  display: flex;      
+  flex-direction: column;  
+  justify-content: space-between;
+}
+
+.feature-info h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--dark-blue);
+  margin-bottom: 0.5rem;
+}
+
+.feature-info p {
+  font-size: 0.95rem;
+  color: var(--dark-gray);
+}
+
+/* Rating & Free Label */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.6rem;
+}
+
+.rating {
+  font-size: 0.95rem;
+  color: var(--light-blue);
+  font-weight: 500;
+}
+
+.rating i {
+  margin-right: 4px;
+}
+
+.free-tag {
+  background-color: var(--dark-blue);
+  color: var(--white);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .course-overview {
+    padding: 2rem 1rem;
+  }
+
+  .course-overview h2 {
+    font-size: 1.6rem;
+  }
+
+  .feature-info h4 {
+    font-size: 1rem;
+  }
+
+  .feature-info p {
+    font-size: 0.9rem;
+  }
+}
