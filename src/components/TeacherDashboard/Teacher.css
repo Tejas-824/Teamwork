@@ -225,8 +225,8 @@ body {
   gap: 0.5rem;
   color: var(--white);
   padding: 0.4rem 0;
-   font-size: 1rem;          
-  font-weight: 500;  
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
   transition: color 0.3s ease;
 }
@@ -294,7 +294,7 @@ body {
   height: auto;
 }
 
-/* Dark mode */
+/* === Dark Mode === */
 .dashboard-container.dark {
   background-color: #121212;
   color: #e5e5e5;
@@ -340,12 +340,12 @@ body {
   color: initial;
 }
 
+/* ✅ FIX: Make "Learning" and "Academy" white in dark mode */
 .dashboard-container.dark .logo-title .black {
   color: var(--white);
 }
 
-
-/* Responsive */
+/* === Responsive === */
 @media (max-width: 768px) {
   .main-content {
     flex-direction: column;

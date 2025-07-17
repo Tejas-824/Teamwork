@@ -1,0 +1,74 @@
+:root {
+  --primary-bg: #ffffff;
+  --secondary-bg: #f0f2f5;
+  --primary-text: #1a1a1a;
+  --secondary-text: #444;
+  --accent-color: #4a90e2;
+  --card-bg: #ffffff;
+  --border-color: #ddd;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-container {
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+  min-height: 100vh;
+  transition: all 0.3s ease-in-out;
+}
+
+.dashboard-header {
+  background-color: var(--secondary-bg);
+  box-shadow: 0 2px 4px var(--shadow-color);
+  padding: 0.8rem 1.2rem;
+}
+
+.nav-item,
+.submenu-item {
+  color: var(--primary-text);
+}
+
+.card {
+  background-color: var(--card-bg);
+  box-shadow: 0 2px 8px var(--shadow-color);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+/* Buttons */
+.button,
+.primary-button {
+  background-color: var(--accent-color);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    position: absolute;
+    z-index: 1000;
+  }
+
+  .dashboard-main {
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .submenu-item {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+}

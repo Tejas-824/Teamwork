@@ -1,0 +1,146 @@
+:root {
+  --theme-color: #4B7BE5;
+  --bg-light: #f9f9fb;
+  --card-bg: #ffffff;
+  --text-dark: #2e2e2e;
+  --text-light: #555;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Section Wrapper */
+.dashboard-section {
+  padding: 20px;
+  background-color: var(--bg-light);
+  min-height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Title */
+.dashboard-section h2 {
+  color: var(--theme-color);
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Class Selector */
+.class-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.class-btn {
+  padding: 8px 16px;
+  border: 2px solid var(--theme-color);
+  background-color: #fff;
+  color: var(--theme-color);
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.class-btn:hover,
+.class-btn.active {
+  background-color: var(--theme-color);
+  color: white;
+}
+
+/* Grid Layout */
+.quiz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 20px;
+}
+
+/* Card */
+.quiz-card {
+  display: flex;
+  gap: 16px;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease;
+}
+
+.quiz-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Icon */
+.icon-wrapper {
+  font-size: 28px;
+  color: var(--theme-color);
+  flex-shrink: 0;
+}
+
+/* Text Content */
+.quiz-info h4 {
+  margin: 0;
+  font-size: 18px;
+  color: var(--text-dark);
+}
+
+.quiz-info p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+/* Status */
+.status-tag {
+  margin-top: 4px;
+}
+
+.active-status {
+  color: var(--success-color);
+  font-weight: bold;
+}
+
+.inactive-status {
+  color: var(--danger-color);
+  font-weight: bold;
+}
+
+/* No Result Message */
+.no-quiz {
+  text-align: center;
+  font-style: italic;
+  color: #888;
+  font-size: 16px;
+  margin-top: 40px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-section {
+    padding: 15px;
+  }
+
+  .class-btn {
+    flex: 1 1 30%;
+    text-align: center;
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  .quiz-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .quiz-info h4 {
+    font-size: 16px;
+  }
+
+  .icon-wrapper {
+    font-size: 30px;
+    margin-bottom: 8px;
+  }
+}

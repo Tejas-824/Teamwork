@@ -1,0 +1,129 @@
+:root {
+  --primary-bg: #f9f9f9;
+  --primary-text: #222;
+  --secondary-text: #555;
+  --accent-color: #007bff;
+  --card-bg: #fff;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* .dark {
+  --primary-bg: #121212;
+  --primary-text: #ffffff;
+  --secondary-text: #aaaaaa;
+  --accent-color: #4dabf7;
+  --card-bg: #1e1e1e;
+  --shadow-color: rgba(255, 255, 255, 0.05);
+} */
+
+.subject-section {
+  padding: 1.5rem;
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+  min-height: 100vh;
+}
+
+.subject-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+  justify-content: center;
+}
+
+.subject-btn {
+  padding: 0.5rem 1.2rem;
+  border: 2px solid var(--accent-color);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--accent-color);
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.subject-btn.active,
+.subject-btn:hover {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+.subject-grid {
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.subject-card {
+  background-color: var(--card-bg);
+  padding: 1.2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  transition: transform 0.25s ease;
+}
+
+.subject-card:hover {
+  transform: translateY(-5px);
+}
+
+.icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.subject-icon {
+  font-size: 1.8rem;
+  color: var(--accent-color);
+}
+
+.subject-info {
+  margin-top: 0.8rem;
+}
+
+.subject-info h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+  color: var(--primary-text);
+}
+
+.subject-info p {
+  font-size: 0.95rem;
+  color: var(--secondary-text);
+}
+
+.status-tag {
+  font-size: 0.8rem;
+  background-color: #d2ebff;
+  color: #0072c6;
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .subject-section {
+    padding: 1rem;
+  }
+
+  .subject-selector {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .subject-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .subject-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .subject-card {
+    padding: 1rem;
+  }
+}
