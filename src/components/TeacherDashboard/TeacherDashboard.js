@@ -1,47 +1,53 @@
 import { useState, useRef, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
+import Calendar from 'react-calendar';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSearch, faBars, faBell, faMoon, faSun, faChalkboardTeacher, faVideo, faBookOpen,
-  faFileAlt, faQuestionCircle, faComments, faUser, faCogs, faSignOutAlt, faChevronDown,
-  faChevronUp, faGraduationCap, faBook, faSchool, faBuildingColumns
-} from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faBars, faBell, faChalkboardTeacher, faVideo, faBookOpen, faFileAlt, faQuestionCircle, faComments, faUser, faCogs, faSignOutAlt, faChevronDown, faChevronUp, faGraduationCap, faBook, faSchool, faBuildingColumns, faUserEdit, faFolderOpen, faChartLine, faUsers } from "@fortawesome/free-solid-svg-icons";
 import logoImg from "../../assets/logo.jpg";
 
 import ClassQuiz from "./Quiz/Class";
 import SubjectQuiz from './Quiz/Subject';
-// import ClassDoubtSession from './DoubtSession/Class';
-// import SubjectDoubtSession from './DoubtSession/Student';
+import ClassDoubtSession from './DoubtSession/Class';
+import SubjectDoubtSession from './DoubtSession/Subject';
+import GroupChatClass from './GroupChat/Class';
+import GroupChatSubject from './GroupChat/Subject';
 
-import "./Teacher.css";
+import styles from "./Teacher.module.css";
 
-const TeacherDashboard = () => {
+const StudentDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const [liveClassMenuOpen, setLiveClassMenuOpen] = useState(false);
   const [studyMaterialMenuOpen, setStudyMaterialMenuOpen] = useState(false);
-  const [doubtSessionMenuOpen, setDoubtSessionMenuOpen] = useState(false); // NEW STATE
   const [quizMenuOpen, setQuizMenuOpen] = useState(false);
   const [doubtMenuOpen, setDoubtMenuOpen] = useState(false);
   const [chatgptMenuOpen, setChatgptMenuOpen] = useState(false);
+  const [doubtSessionMenuOpen, setDoubtSessionMenuOpen] = useState(false);
+  const [performanceMenuOpen, setPerformanceMenuOpen] = useState(false);
 
   const sidebarRef = useRef(null);
+
+  const [date, setDate] = useState(new Date());
 
   const closeSidebar = () => {
     setSidebarOpen(false);
     setQuizMenuOpen(false);
     setDoubtMenuOpen(false);
     setChatgptMenuOpen(false);
+    setSubmenuOpen(false);
+    setLiveClassMenuOpen(false);
+    setStudyMaterialMenuOpen(false);
+    setDoubtSessionMenuOpen(false);
+    setPerformanceMenuOpen(false);
   };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        setSidebarOpen(false);
+        closeSidebar();
       }
-      if (!event.target.closest(".profile-dropdown")) {
+      if (!event.target.closest(".profileDropdown")) {
         setDropdownOpen(false);
       }
     };
@@ -54,42 +60,40 @@ const TeacherDashboard = () => {
   }, []);
 
   return (
-    <div className={`dashboard-container ${darkMode ? "dark" : ""}`}>
-      <header className={`dashboard-header ${darkMode ? "dark" : ""}`}>
-        <button className="hamburger-button" onClick={() => setSidebarOpen(!sidebarOpen)}>
+    <div className={styles.dashboardContainer}>
+      <header className={styles.dashboardHeader}>
+        <button className={styles.hamburgerButton} onClick={() => setSidebarOpen(!sidebarOpen)}>
           <FontAwesomeIcon icon={faBars} />
         </button>
 
-        <div className="logo-container">
+        <div className={styles.logoContainer}>
           <img src={logoImg} alt="LGA Logo" />
-          <span className="logo-title">
-            <span className="black">Learning </span>
-            <span className="blue">Guide </span>
-            <span className="black">Academy</span>
+          <span className={styles.logoTitle}>
+            <span className={styles.black}>Learning</span>
+            <span className={styles.blue}>Guide</span>
+            <span className={styles.black}> Academy</span>
           </span>
         </div>
 
-        <div className="header-controls">
-          <button className="search-button">
+        <div className={styles.headerControls}>
+          <button className={styles.searchButton}>
             <FontAwesomeIcon icon={faSearch} /> Search
           </button>
-          <button className="notification-button">
+          <button className={styles.notificationButton}>
             <FontAwesomeIcon icon={faBell} />
-            <span className="badge"></span>
+            <span className={styles.badge}></span>
           </button>
-          <button className="toggle-theme-button" onClick={() => setDarkMode(!darkMode)}>
-            <FontAwesomeIcon icon={darkMode ? faSun : faMoon} />
-          </button>
-          <div className="profile-dropdown">
+          <div className={styles.profileDropdown}>
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0JFHKoXSA92jzBf-BYa933eKKpJcj2JxRLpb7O_3zWBT3Aeh5IQrzyjo3SaXiwYKaRxI&usqp=CAU"
               alt="User"
-              className="profile-avatar"
+              className={styles.profileAvatar}
               onClick={() => setDropdownOpen(!dropdownOpen)}
             />
             {dropdownOpen && (
-              <ul className="dropdown-menu">
-                <li><FontAwesomeIcon icon={faUser} /> Profile</li>
+              <ul className={styles.dropdownMenu}>
+                <li><FontAwesomeIcon icon={faUser} /> View Profile</li>
+                <li><FontAwesomeIcon icon={faUserEdit} /> Edit Profile</li>
                 <li><FontAwesomeIcon icon={faCogs} /> Settings</li>
                 <li><FontAwesomeIcon icon={faSignOutAlt} /> Logout</li>
               </ul>
@@ -98,141 +102,193 @@ const TeacherDashboard = () => {
         </div>
       </header>
 
-      <div className="main-content">
-        <aside ref={sidebarRef} className={`sidebar ${sidebarOpen ? "open" : ""}`}>
-          <h2 className="sidebar-subtitle">Teacher Dashboard</h2>
+      <div className={styles.mainContent}>
+        <aside ref={sidebarRef} className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : ""}`}>
+          <h2 className={styles.sidebarSubtitle}>Teacher Dashboard</h2>
 
           {/* My Class */}
-          <div className="nav-item" onClick={() => setSubmenuOpen(!submenuOpen)}>
-            <FontAwesomeIcon icon={faChalkboardTeacher} className="icon" /> My Class
-            <FontAwesomeIcon icon={submenuOpen ? faChevronUp : faChevronDown} className="arrow" />
+          <div className={styles.navItem} onClick={() => setSubmenuOpen(!submenuOpen)}>
+            <FontAwesomeIcon icon={faChalkboardTeacher} className={styles.icon} /> My Class
+            <FontAwesomeIcon icon={submenuOpen ? faChevronUp : faChevronDown} className={styles.arrow} />
           </div>
           {submenuOpen && (
-            <div className="submenu">
-              <div className="submenu-item"><FontAwesomeIcon icon={faSchool} className="icon" /> ICSC</div>
-              <div className="submenu-item"><FontAwesomeIcon icon={faBuildingColumns} className="icon" /> CBSE</div>
-              <div className="submenu-item"><FontAwesomeIcon icon={faGraduationCap} className="icon" /> JAC</div>
+            <div className={styles.submenu}>
+              <div className={styles.submenuItem}><FontAwesomeIcon icon={faSchool} className={styles.icon} /> ICSC</div>
+              <div className={styles.submenuItem}><FontAwesomeIcon icon={faBuildingColumns} className={styles.icon} /> CBSE</div>
+              <div className={styles.submenuItem}><FontAwesomeIcon icon={faGraduationCap} className={styles.icon} /> JAC</div>
             </div>
           )}
 
-          {/* Live Class */}
-          <div className="nav-item" onClick={() => setLiveClassMenuOpen(!liveClassMenuOpen)}>
-            <FontAwesomeIcon icon={faVideo} className="icon" /> Live Class
-            <FontAwesomeIcon icon={liveClassMenuOpen ? faChevronUp : faChevronDown} className="arrow" />
+          {/*Take Live Class */}
+          <div className={styles.navItem} onClick={() => setLiveClassMenuOpen(!liveClassMenuOpen)}>
+            <FontAwesomeIcon icon={faVideo} className={styles.icon} /> Live Class
+            <FontAwesomeIcon icon={liveClassMenuOpen ? faChevronUp : faChevronDown} className={styles.arrow} />
           </div>
           {liveClassMenuOpen && (
-            <div className="submenu">
-              <div className="submenu-item"><FontAwesomeIcon icon={faSchool} className="icon" /> ICSC</div>
-              <div className="submenu-item"><FontAwesomeIcon icon={faBuildingColumns} className="icon" /> CBSE</div>
-              <div className="submenu-item"><FontAwesomeIcon icon={faGraduationCap} className="icon" /> JAC</div>
+            <div className={styles.submenu}>
+              <div className={styles.submenuItem}><FontAwesomeIcon icon={faSchool} className={styles.icon} /> ICSC</div>
+              <div className={styles.submenuItem}><FontAwesomeIcon icon={faBuildingColumns} className={styles.icon} /> CBSE</div>
+              <div className={styles.submenuItem}><FontAwesomeIcon icon={faGraduationCap} className={styles.icon} /> JAC</div>
             </div>
           )}
 
-          {/* Provide Study Material */}
-          <div className="nav-item" onClick={() => setStudyMaterialMenuOpen(!studyMaterialMenuOpen)}>
-            <FontAwesomeIcon icon={faBookOpen} className="icon" /> Provide Study Material
-            <FontAwesomeIcon icon={studyMaterialMenuOpen ? faChevronUp : faChevronDown} className="arrow" />
+          {/* Study Material */}
+          <div className={styles.navItem} onClick={() => setStudyMaterialMenuOpen(!studyMaterialMenuOpen)}>
+            <FontAwesomeIcon icon={faFolderOpen} className={styles.icon} />Provide Study Material
+            <FontAwesomeIcon icon={studyMaterialMenuOpen ? faChevronUp : faChevronDown} className={styles.arrow} />
           </div>
           {studyMaterialMenuOpen && (
-            <div className="submenu">
-              <div className="submenu-item"><FontAwesomeIcon icon={faGraduationCap} className="icon" /> Class</div>
-              <div className="submenu-item"><FontAwesomeIcon icon={faBook} className="icon" /> Subject</div>
-              <div className="submenu-item"><FontAwesomeIcon icon={faBook} className="icon" /> Pdf</div>
+            <div className={styles.submenu}>
+              <div className={styles.submenuItem}><FontAwesomeIcon icon={faGraduationCap} className={styles.icon} /> Class</div>
+              <div className={styles.submenuItem}><FontAwesomeIcon icon={faBook} className={styles.icon} /> Subject</div>
+              <div className={styles.submenuItem}><FontAwesomeIcon icon={faBook} className={styles.icon} /> Pdf</div>
             </div>
           )}
 
-          {/* Conduct Doubt Session */}
-         <div className="nav-item" onClick={() => setDoubtSessionMenuOpen(!doubtSessionMenuOpen)}>
-  <FontAwesomeIcon icon={faBookOpen} className="icon" /> Conduct Doubt Session
-  <FontAwesomeIcon icon={doubtSessionMenuOpen ? faChevronUp : faChevronDown} className="arrow" />
-</div>
-
-{doubtSessionMenuOpen && (
-  <div className="submenu">
-    <Link to="/doubt/class" className="submenu-item" onClick={closeSidebar}>
-      <FontAwesomeIcon icon={faGraduationCap} className="icon" /> Class
-    </Link>
-    <Link to="/doubt/subject" className="submenu-item" onClick={closeSidebar}>
-      <FontAwesomeIcon icon={faBook} className="icon" /> Subject
-    </Link>
-  </div>
-)}
+          {/* Doubt Session */}
+          <div className={styles.navItem} onClick={() => setDoubtSessionMenuOpen(!doubtSessionMenuOpen)}>
+            <FontAwesomeIcon icon={faQuestionCircle} className={styles.icon} />Conduct Doubt Session
+            <FontAwesomeIcon icon={doubtSessionMenuOpen ? faChevronUp : faChevronDown} className={styles.arrow} />
+          </div>
+          {doubtSessionMenuOpen && (
+            <div className={styles.submenu}>
+              <Link to="/doubt/class" className={styles.submenuItem} onClick={closeSidebar}>
+                <FontAwesomeIcon icon={faGraduationCap} className={styles.icon} /> Class
+              </Link>
+              <Link to="/doubt/subject" className={styles.submenuItem} onClick={closeSidebar}>
+                <FontAwesomeIcon icon={faBook} className={styles.icon} /> Subject
+              </Link>
+            </div>
+          )}
 
           {/* Quiz/Test */}
-          <div className="nav-item" onClick={() => setQuizMenuOpen(!quizMenuOpen)}>
-            <FontAwesomeIcon icon={faFileAlt} className="icon" /> Quiz/Test
-            <FontAwesomeIcon icon={quizMenuOpen ? faChevronUp : faChevronDown} className="arrow" />
+          <div className={styles.navItem} onClick={() => setQuizMenuOpen(!quizMenuOpen)}>
+            <FontAwesomeIcon icon={faFileAlt} className={styles.icon} /> Quiz/Test
+            <FontAwesomeIcon icon={quizMenuOpen ? faChevronUp : faChevronDown} className={styles.arrow} />
           </div>
           {quizMenuOpen && (
-            <div className="submenu">
-              <Link to="/quiz" className="submenu-item" onClick={closeSidebar}>
-                <FontAwesomeIcon icon={faGraduationCap} className="icon" /> Class
+            <div className={styles.submenu}>
+              <Link to="/quiz" className={styles.submenuItem} onClick={closeSidebar}>
+                <FontAwesomeIcon icon={faGraduationCap} className={styles.icon} /> Class
               </Link>
-              <Link to="/subject" className="submenu-item" onClick={closeSidebar}>
-                <FontAwesomeIcon icon={faBook} className="icon" /> Subject
+              <Link to="/subject" className={styles.submenuItem} onClick={closeSidebar}>
+                <FontAwesomeIcon icon={faBook} className={styles.icon} /> Subject
+              </Link>
+            </div>
+          )}
+
+          {/* Group Discussion */}
+          <div className={styles.navItem} onClick={() => setChatgptMenuOpen(!chatgptMenuOpen)}>
+            <FontAwesomeIcon icon={faComments} className={styles.icon} /> Group Chat
+            <FontAwesomeIcon icon={chatgptMenuOpen ? faChevronUp : faChevronDown} className={styles.arrow} />
+          </div>
+          {chatgptMenuOpen && (
+            <div className={styles.submenu}>
+              <Link to="/groupchat/class" className={styles.submenuItem} onClick={closeSidebar}>
+                <FontAwesomeIcon icon={faGraduationCap} className={styles.icon} /> Class
+              </Link>
+              <Link to="/groupchat/subject" className={styles.submenuItem} onClick={closeSidebar}>
+                <FontAwesomeIcon icon={faBook} className={styles.icon} /> Subject
               </Link>
             </div>
           )}
 
           {/* Performance Check */}
-          <div className="nav-item" onClick={() => setDoubtMenuOpen(!doubtMenuOpen)}>
-            <FontAwesomeIcon icon={faQuestionCircle} className="icon" /> Performance Check
-            <FontAwesomeIcon icon={doubtMenuOpen ? faChevronUp : faChevronDown} className="arrow" />
+          <div className={styles.navItem} onClick={() => setPerformanceMenuOpen(!performanceMenuOpen)}>
+            <FontAwesomeIcon icon={faChartLine} className={styles.icon} /> Performance Check
+            <FontAwesomeIcon icon={performanceMenuOpen ? faChevronUp : faChevronDown} className={styles.arrow} />
           </div>
-          {doubtMenuOpen && (
-            <div className="submenu">
-              <Link to="/doubt/class" className="submenu-item" onClick={closeSidebar}>
-                <FontAwesomeIcon icon={faGraduationCap} className="icon" /> Class
+          {performanceMenuOpen && (
+            <div className={styles.submenu}>
+              <Link to="/performance/student" className={styles.submenuItem} onClick={closeSidebar}>
+                <FontAwesomeIcon icon={faGraduationCap} className={styles.icon} /> Student
               </Link>
-              <Link to="/doubt/subject" className="submenu-item" onClick={closeSidebar}>
-                <FontAwesomeIcon icon={faBook} className="icon" /> Subject
+              <Link to="/performance/class" className={styles.submenuItem} onClick={closeSidebar}>
+                <FontAwesomeIcon icon={faUsers} className={styles.icon} /> Class
               </Link>
             </div>
           )}
-
-          {/* Group Chat */}
-          <div className="nav-item" onClick={() => setChatgptMenuOpen(!chatgptMenuOpen)}>
-  <FontAwesomeIcon icon={faComments} className="icon" /> Group Chat
-  <FontAwesomeIcon icon={chatgptMenuOpen ? faChevronUp : faChevronDown} className="arrow" />
-</div>
-{chatgptMenuOpen && (
-  <div className="submenu">
-    <Link to="/chatgpt/class" className="submenu-item" onClick={closeSidebar}>
-      <FontAwesomeIcon icon={faGraduationCap} className="icon" /> Class
-    </Link>
-    <Link to="/chatgpt/subject" className="submenu-item" onClick={closeSidebar}>
-      <FontAwesomeIcon icon={faBook} className="icon" /> Subject
-    </Link>
-  </div>
-)}
         </aside>
 
-        <main className="dashboard-main">
+        <main className={styles.dashboardMain}>
           <Routes>
             <Route
               path=""
               element={
-                <div className="dashboard-welcome">
-                  <div>
-                    <h2>Welcome back, Teacher!</h2>
-                    <p>Start exploring your subjects and lessons to continue your journey of learning.</p>
-                    <button className="learn-more">Learn more</button>
-                    <div className="buy-lesson">
-                      <button className="primary-button">Buy Lesson</button>
+                <div className={styles.dashboardMain}>
+                  <div className={styles.welcomeSection}>
+                    <div className={styles.welcomeText}>
+                      <h2>Welcome back, Teacher!</h2>
+                      <p>Explore your classes, quizzes, and study resources to enhance your learning journey.</p>
+                    </div>
+                    <div className={styles.welcomeImage}>
+                      <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRTxGlIoMtIT96G4dmbTMMP_3WmXYASo9YBw&s"
+                        alt="Welcome Illustration"
+                      />
                     </div>
                   </div>
-                  <div className="illustration" style={{ maxWidth: 400 }}>
-        <img src="/illustration-dashboard.svg" alt="Dashboard Illustration" style={{ width: "100%", height: "auto" }} />
-      </div>
-    </div>
-  }
-/>
-    <Route path="quiz" element={<ClassQuiz />} />
-    <Route path="subject" element={<SubjectQuiz />} />
-    {/* <Route path="doubt/class" element={<ClassDoubtSession />} />
-    <Route path="doubt/subject" element={<SubjectDoubtSession />} /> */}
 
- 
+                  {/* Stats Section */}
+                  <div className={styles.statsSection}>
+                    <div className={styles.statBox}>
+                      <span className={styles.statIcon}>📚</span>
+                      <div className={styles.statInfo}>
+                        <div className={styles.statNumber}>5</div>
+                        <div className={styles.statLabel}>Subjects Enrolled</div>
+                      </div>
+                    </div>
+                    <div className={styles.statBox}>
+                      <span className={styles.statIcon}>🏫</span>
+                      <div className={styles.statInfo}>
+                        <div className={styles.statNumber}>3</div>
+                        <div className={styles.statLabel}>Classes Attended</div>
+                      </div>
+                    </div>
+                    <div className={styles.statBox}>
+                      <span className={styles.statIcon}>🗓️</span>
+                      <div className={styles.statInfo}>
+                        <div className={styles.statNumber}>12</div>
+                        <div className={styles.statLabel}>Quizzes Completed</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Attendance */}
+                  <div className={styles.bottomSection}>
+                    <div className={`${styles.sectionBox} ${styles.attendance}`}>
+                      <h3>My Attendance</h3>
+                      <Calendar
+                        onChange={setDate}
+                        value={date}
+                        className={styles.customCalendar}
+                      />
+                      <p className={styles.selectedDate}>Selected Date: {date.toDateString()}</p>
+                    </div>
+
+                    {/* Activities */}
+                    <div className={`${styles.sectionBox} ${styles.activitiesSection}`}>
+                      <div className={styles.activitiesHeader}>
+                        <h3>Upcoming Activities</h3>
+                        <button className={styles.viewAllButton}>View All</button>
+                      </div>
+                      <ul className={styles.activitiesList}>
+                        <li>Science Fair (Classes 6–8)</li>
+                        <li>Math Olympiad (Classes 9–10)</li>
+                        <li>Art Competition (Classes 6–12)</li>
+                        <li>Inter-school Sports Day</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              }
+            />
+            <Route path="quiz" element={<ClassQuiz />} />
+            <Route path="subject" element={<SubjectQuiz />} />
+            <Route path="/doubt/class" element={<ClassDoubtSession />} />
+            <Route path="/doubt/subject" element={<SubjectDoubtSession />} />
+            <Route path="/groupchat/class" element={<GroupChatClass />} />
+            <Route path="/groupchat/subject" element={<GroupChatSubject />} />
           </Routes>
         </main>
       </div>
@@ -240,4 +296,4 @@ const TeacherDashboard = () => {
   );
 };
 
-export default TeacherDashboard;
+export default StudentDashboard;

@@ -1,0 +1,176 @@
+:root {
+  --primary-bg: #ffffff;
+  --secondary-bg: #f0f2f5;
+  --primary-text: #1a1a1a;
+  --secondary-text: #444;
+  --accent-color: #4a90e2;
+  --card-bg: #ffffff;
+  --border-color: #ddd;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --dark-blue: #3E5BA9;
+  --light-blue: #5D79D0;
+  --white: #ffffff;
+  --light-gray: #F2F2F2;
+  --soft-blue-grey: #E6ECF9;
+  --white-transparent: rgba(255, 255, 255, 0.1);
+}
+
+.doubt-section {
+  padding: 1.5rem;
+  background-color: var(--soft-blue-grey);
+  min-height: 100vh;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.back-btn {
+  background-color: var(--dark-blue);
+  color: var(--white);
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: var(--light-blue);
+}
+
+.doubt-section h2 {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 1.6rem;
+  color: var(--dark-blue);
+}
+
+/* Class Selector */
+.class-selector {
+  margin: 1.2rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.class-btn {
+  padding: 8px 18px;
+  border: 2px solid var(--dark-blue);
+  border-radius: 20px;
+  background-color: var(--white);
+  color: var(--dark-blue);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.class-btn:hover,
+.class-btn.active {
+  background-color: var(--dark-blue);
+  color: var(--white);
+}
+
+/* Doubt Cards Grid */
+.doubt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Doubt Card */
+.doubt-card {
+  background-color: var(--card-bg);
+  padding: 1rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.doubt-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Icon */
+.icon-wrapper {
+  font-size: 2rem;
+  color: var(--dark-blue);
+  margin-bottom: 0.8rem;
+}
+
+/* Text Info */
+.doubt-info h4 {
+  font-size: 1.1rem;
+  color: var(--primary-text);
+  margin-bottom: 0.3rem;
+}
+
+.doubt-info p {
+  font-size: 0.95rem;
+  color: var(--secondary-text);
+}
+
+/* Status */
+.status-tag {
+  margin-top: 0.8rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.resolved {
+  color: #28a745;
+}
+
+.unresolved {
+  color: #dc3545;
+}
+
+.no-doubt {
+  color: #888;
+  font-size: 1rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .class-btn {
+    flex: 1 1 40%;
+  }
+
+  .doubt-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Dark Mode Support */
+.dashboard-container.dark {
+  --dark-blue: #66aaff;
+  --primary-bg: #121212;
+  --card-bg: #1e1e1e;
+  --primary-text: #f1f1f1;
+  --secondary-text: #ccc;
+}
+
+.dashboard-container.dark .doubt-section {
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+}
+
+.dashboard-container.dark .doubt-card {
+  background-color: var(--card-bg);
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.05);
+}
+
+.dashboard-container.dark .doubt-info h4,
+.dashboard-container.dark .doubt-info p {
+  color: var(--primary-text);
+}

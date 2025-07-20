@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   faClipboardCheck,
   faBrain,
@@ -10,7 +11,7 @@ import {
   faGlobe,
   faLightbulb,
 } from "@fortawesome/free-solid-svg-icons";
-import './ClassQuiz.css';
+import styles from './Quiz.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const quizzesData = [
@@ -367,38 +368,46 @@ const quizzesData = [
 
 const ClassQuiz = () => {
   const [selectedClass, setSelectedClass] = useState(6);
+  const navigate = useNavigate();
 
   const filteredQuizzes = quizzesData.filter((quiz) => quiz.class === selectedClass);
 
   return (
-    <div className="quiz-section">
-      <h2>Select Your Class</h2>
-      <div className="class-selector">
+    <div className={styles.quizSection}>
+      <div className={styles.topBar}>
+        <button className={styles.backBtn} onClick={() => navigate("/")}>
+          ← Back
+        </button>
+      </div>
+
+      <h2 className={styles.heading}>Select Your Class</h2>
+
+      <div className={styles.classSelector}>
         {[6, 7, 8, 9, 10, 11, 12].map((cls) => (
           <button
             key={cls}
             onClick={() => setSelectedClass(cls)}
-            className={`class-btn ${selectedClass === cls ? "active" : ""}`}
+            className={`${styles.classBtn} ${selectedClass === cls ? styles.active : ""}`}
           >
             Class {cls}
           </button>
         ))}
       </div>
 
-      <div className="feature-grid">
+      <div className={styles.featureGrid}>
         {filteredQuizzes.map((quiz, index) => (
-          <div className="feature-card" key={index}>
-            <div className="icon-wrapper">
-              <FontAwesomeIcon icon={quiz.icon} className="quiz-icon" />
+          <div className={styles.featureCard} key={index}>
+            <div className={styles.iconWrapper}>
+              <FontAwesomeIcon icon={quiz.icon} className={styles.quizIcon} />
             </div>
-            <div className="feature-info">
+            <div className={styles.featureInfo}>
               <h4>{quiz.title}</h4>
               <p>{quiz.description}</p>
-              <div className="card-footer">
-                <span className="rating">
+              <div className={styles.cardFooter}>
+                <span className={styles.rating}>
                   <i className="fas fa-star"></i> {quiz.rating}
                 </span>
-                <span className="free-tag">{quiz.tag}</span>
+                <span className={styles.freeTag}>{quiz.tag}</span>
               </div>
             </div>
           </div>

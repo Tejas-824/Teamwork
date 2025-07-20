@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   faRobot,
   faLightbulb,
@@ -6,7 +7,7 @@ import {
   faComments,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./Class.css";
+import styles from "./Class.module.css";
 
 const chatFeatures = [
   {
@@ -48,39 +49,45 @@ const chatFeatures = [
 
 const ChatgptClass = () => {
   const [selectedClass, setSelectedClass] = useState(6);
-
+  const navigate = useNavigate();
   const filteredFeatures = chatFeatures.filter((f) => f.class === selectedClass);
 
   return (
-    <div className="chatgpt-class-section">
-      <h2>Select Your Class</h2>
-      <div className="class-selector">
-        {[6, 7, 8].map((cls) => (
-          <button
-            key={cls}
-            onClick={() => setSelectedClass(cls)}
-            className={`class-btn ${selectedClass === cls ? "active" : ""}`}
-          >
-            Class {cls}
-          </button>
-        ))}
-      </div>
+   <div className={styles.chatgptClassSection}>
+  <div className={styles.topBar}>
+    <button className={styles.backBtn} onClick={() => navigate("/")}>
+      ← Back
+    </button>
+  </div>
 
-      <div className="chatgpt-feature-grid">
-        {filteredFeatures.map((feature, index) => (
-          <div className="chatgpt-feature-card" key={index}>
-            <div className="icon-wrapper">
-              <FontAwesomeIcon icon={feature.icon} className="chatgpt-icon" />
-            </div>
-            <div className="feature-info">
-              <h4>{feature.title}</h4>
-              <p>{feature.description}</p>
-              <div className="status-tag">{feature.tag}</div>
-            </div>
-          </div>
-        ))}
+  <h2>Select Your Class</h2>
+  <div className={styles.classSelector}>
+    {[6, 7, 8].map((cls) => (
+      <button
+        key={cls}
+        onClick={() => setSelectedClass(cls)}
+        className={`${styles.classBtn} ${selectedClass === cls ? styles.active : ""}`}
+      >
+        Class {cls}
+      </button>
+    ))}
+  </div>
+
+  <div className={styles.chatgptFeatureGrid}>
+    {filteredFeatures.map((feature, index) => (
+      <div className={styles.chatgptFeatureCard} key={index}>
+        <div className={styles.iconWrapper}>
+          <FontAwesomeIcon icon={feature.icon} className={styles.chatgptIcon} />
+        </div>
+        <div className={styles.featureInfo}>
+          <h4>{feature.title}</h4>
+          <p>{feature.description}</p>
+          <div className={styles.statusTag}>{feature.tag}</div>
+        </div>
       </div>
-    </div>
+    ))}
+  </div>
+</div>
   );
 };
 

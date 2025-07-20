@@ -7,23 +7,16 @@
   --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
-/* .dark {
-  --primary-bg: #121212;
-  --primary-text: #ffffff;
-  --secondary-text: #aaaaaa;
-  --accent-color: #4dabf7;
-  --card-bg: #1e1e1e;
-  --shadow-color: rgba(255, 255, 255, 0.05);
-} */
+/* === Light Mode === */
 
-.subject-section {
+.subjectSection {
   padding: 1.5rem;
   background-color: var(--primary-bg);
   color: var(--primary-text);
   min-height: 100vh;
 }
 
-.subject-selector {
+.subjectSelector {
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
@@ -31,7 +24,7 @@
   justify-content: center;
 }
 
-.subject-btn {
+.subjectBtn {
   padding: 0.5rem 1.2rem;
   border: 2px solid var(--accent-color);
   border-radius: 6px;
@@ -42,19 +35,23 @@
   transition: 0.3s ease;
 }
 
-.subject-btn.active,
-.subject-btn:hover {
+.active {
   background-color: var(--accent-color);
   color: #fff;
 }
 
-.subject-grid {
+.subjectBtn:hover {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+.subjectGrid {
   display: grid;
   gap: 1.2rem;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
-.subject-card {
+.subjectCard {
   background-color: var(--card-bg);
   padding: 1.2rem;
   border-radius: 10px;
@@ -62,37 +59,60 @@
   transition: transform 0.25s ease;
 }
 
-.subject-card:hover {
+.subjectCard:hover {
   transform: translateY(-5px);
 }
 
-.icon-wrapper {
+.topBar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+/* Back Button */
+.backBtn {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.backBtn:hover {
+  background-color: #0056b3;
+}
+
+
+.iconWrapper {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.subject-icon {
+.subjectIcon {
   font-size: 1.8rem;
   color: var(--accent-color);
 }
 
-.subject-info {
+.subjectInfo {
   margin-top: 0.8rem;
 }
 
-.subject-info h4 {
+.subjectInfo h4 {
   font-size: 1.1rem;
   margin-bottom: 0.3rem;
   color: var(--primary-text);
 }
 
-.subject-info p {
+.subjectInfo p {
   font-size: 0.95rem;
   color: var(--secondary-text);
 }
 
-.status-tag {
+.statusTag {
   font-size: 0.8rem;
   background-color: #d2ebff;
   color: #0072c6;
@@ -103,27 +123,69 @@
   font-weight: 500;
 }
 
-/* Responsive Design */
+
+/* === Dark Mode === */
+
+.dark {
+  --primary-bg: #121212;
+  --primary-text: #e5e5e5;
+  --secondary-text: #aaa;
+  --accent-color: #4a90e2;
+  --card-bg: #1e1e1e;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+.dark .subjectBtn {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.dark .active,
+.dark .subjectBtn:hover {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+.dark .subjectCard {
+  background-color: var(--card-bg);
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.dark .subjectInfo h4 {
+  color: var(--primary-text);
+}
+
+.dark .subjectInfo p {
+  color: var(--secondary-text);
+}
+
+.dark .statusTag {
+  background-color: #2f2f2f;
+  color: var(--accent-color);
+}
+
+/* === Responsive === */
+
 @media (max-width: 600px) {
-  .subject-section {
+  .subjectSection {
     padding: 1rem;
   }
 
-  .subject-selector {
+  .subjectSelector {
     flex-direction: column;
     align-items: center;
   }
 
-  .subject-btn {
+  .subjectBtn {
     width: 100%;
     text-align: center;
   }
 
-  .subject-grid {
+  .subjectGrid {
     grid-template-columns: 1fr;
   }
 
-  .subject-card {
+  .subjectCard {
     padding: 1rem;
   }
 }

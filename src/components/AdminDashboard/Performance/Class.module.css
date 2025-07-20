@@ -1,0 +1,88 @@
+:root {
+  --primary-dark-blue: #3e5ba9;
+  --primary-light-blue: #5d79d0;
+  --white: #ffffff;
+  --dark-gray: #2e2e2e;
+  --light-gray: #f2f2f2;
+  --soft-blue-grey: #e6ecf9;
+}
+
+.performanceContainer {
+  padding: 1.5rem;
+  background-color: var(--soft-blue-grey);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.topBar {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: auto;
+}
+
+.backBtn {
+  background-color: var(--primary-dark-blue);
+  color: var(--white);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.backBtn:hover {
+  background-color: var(--primary-light-blue);
+}
+
+canvas {
+  max-width: 100%;
+  width: 100%;
+  max-height: 70vh;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .performanceContainer {
+    padding: 1rem;
+  }
+
+  .topBar {
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+
+  .backBtn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  canvas {
+    max-height: 60vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .performanceContainer {
+    padding: 0.5rem;
+  }
+
+  .topBar {
+    top: 0.3rem;
+    right: 0.3rem;
+  }
+
+  .backBtn {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  canvas {
+    max-height: 50vh;
+  }
+}

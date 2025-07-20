@@ -1,5 +1,6 @@
 import { useState } from "react";
-import "./ClassSubject.css";
+import { useNavigate } from "react-router-dom";
+import styles from './Class.module.css';
 import {
   faBook,
   faFlask,
@@ -32,7 +33,7 @@ const subjectsData = [
   { class: 7, title: "English", description: "Grammar and advanced writing.", icon: faBook, rating: 4.9, tag: "Core" },
   { class: 7, title: "Art", description: "Advanced sketching and color theory.", icon: faPalette, rating: 4.4, tag: "Optional" },
  
-  { class: 7, title: "Computer", description: "Basics of coding and MS Office.", icon: faAtom, rating: 4.5, tag: "Optional" },
+{ class: 7, title: "Computer", description: "Basics of coding and MS Office.", icon: faAtom, rating: 4.5, tag: "Optional" },
 { class: 8, title: "Science", description: "Intro to force, energy, and life processes.", icon: faFlask, rating: 4.8, tag: "Core" },
 { class: 8, title: "Mathematics", description: "Algebra, exponents, and data handling.", icon: faCalculator, rating: 4.7, tag: "Core" },
 { class: 8, title: "English", description: "Grammar, creative writing, and literature.", icon: faBook, rating: 4.9, tag: "Core" },
@@ -72,37 +73,44 @@ const subjectsData = [
 
 const ClassSubject = () => {
   const [selectedClass, setSelectedClass] = useState(6);
+  const navigate = useNavigate();
   const filteredSubjects = subjectsData.filter((subject) => subject.class === selectedClass);
 
   return (
-    <div className="subject-section">
-      <h2>Select Your Class</h2>
-      <div className="class-selector">
+    <div className={styles.subjectSection}>
+      <div className={styles.topBar}>
+        <button className={styles.backBtn} onClick={() => navigate("/")}>
+          ← Back
+        </button>
+      </div>
+      <h2 className={styles.heading}>Select Your Class</h2>
+
+      <div className={styles.classSelector}>
         {[6, 7, 8, 9, 10, 11, 12].map((cls) => (
           <button
             key={cls}
             onClick={() => setSelectedClass(cls)}
-            className={`class-btn ${selectedClass === cls ? "active" : ""}`}
+            className={`${styles.classBtn} ${selectedClass === cls ? styles.active : ""}`}
           >
             Class {cls}
           </button>
         ))}
       </div>
 
-      <div className="subject-grid">
+      <div className={styles.subjectGrid}>
         {filteredSubjects.map((subject, index) => (
-          <div className="subject-card" key={index}>
-            <div className="icon-wrapper">
-              <FontAwesomeIcon icon={subject.icon} className="subject-icon" />
+          <div className={styles.subjectCard} key={index}>
+            <div className={styles.iconWrapper}>
+              <FontAwesomeIcon icon={subject.icon} className={styles.subjectIcon} />
             </div>
-            <div className="subject-info">
+            <div className={styles.subjectInfo}>
               <h4>{subject.title}</h4>
               <p>{subject.description}</p>
-              <div className="card-footer">
-                <span className="rating">
+              <div className={styles.cardFooter}>
+                <span className={styles.rating}>
                   <i className="fas fa-star"></i> {subject.rating}
                 </span>
-                <span className="tag">{subject.tag}</span>
+                <span className={styles.tag}>{subject.tag}</span>
               </div>
             </div>
           </div>

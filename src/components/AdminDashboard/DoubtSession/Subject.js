@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import {
   faBook,
   faQuestionCircle,
@@ -8,7 +8,7 @@ import {
   faLightbulb,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from  "./Subject.module.css"; 
+import styles from "./Subject.module.css";
 
 const subjectDoubts = [
   {
@@ -44,41 +44,43 @@ const subjectDoubts = [
 ];
 
 const SubjectDoubtSession = () => {
-  const [selectedSubject, setSelectedSubject] = useState("Mathematics");
-  const navigate = useNavigate(); 
+  const [selectedStatus, setSelectedStatus] = useState("All");
+  const navigate = useNavigate();
 
-  const filtered = subjectDoubts.filter(
-    (item) => item.subject === selectedSubject
+  const statuses = ["All", "Resolved", "Unresolved"];
+
+  const filteredDoubts = subjectDoubts.filter((doubt) =>
+    selectedStatus === "All" ? true : doubt.status === selectedStatus
   );
 
-  const subjects = [...new Set(subjectDoubts.map((d) => d.subject))];
-
   return (
-     <div className={styles.dashboardContainer}>
+    <div className={styles.dashboardContainer}>
       <div className={styles.topBar}>
         <button className={styles.backBtn} onClick={() => navigate("/")}>
           ← Back
         </button>
       </div>
-      <h2 className={styles.heading}>Subject-wise Doubt Sessions</h2>
+      <h2 className={styles.heading}>Admin - All Doubt Sessions</h2>
 
       <div className={styles.selectors}>
         <div className={styles.btnGroup}>
-          {subjects.map((subj) => (
+          {statuses.map((status) => (
             <button
-              key={subj}
-              onClick={() => setSelectedSubject(subj)}
-              className={`${styles.selectorBtn} ${selectedSubject === subj ? styles.active : ""}`}
+              key={status}
+              onClick={() => setSelectedStatus(status)}
+              className={`${styles.selectorBtn} ${
+                selectedStatus === status ? styles.active : ""
+              }`}
             >
-              {subj}
+              {status}
             </button>
           ))}
         </div>
       </div>
 
       <div className={styles.quizGrid}>
-        {filtered.length > 0 ? (
-          filtered.map((doubt, index) => (
+        {filteredDoubts.length > 0 ? (
+          filteredDoubts.map((doubt, index) => (
             <div className={styles.quizCard} key={index}>
               <div className={styles.iconWrapper}>
                 <FontAwesomeIcon icon={doubt.icon} className={styles.quizIcon} />
@@ -97,7 +99,7 @@ const SubjectDoubtSession = () => {
             </div>
           ))
         ) : (
-          <p className={styles.noQuiz}>No doubts found for {selectedSubject}</p>
+          <p className={styles.noQuiz}>No {selectedStatus} doubts found.</p>
         )}
       </div>
     </div>

@@ -1,14 +1,8 @@
 import { useState } from "react";
-import {
-  faCalculator,
-  faFlask,
-  faGlobe,
-  faBook,
-  faLightbulb,
-} from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import { faCalculator, faFlask, faGlobe, faBook, faLightbulb } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./Subject.css";
-
+import styles from "./Subject.module.css"; 
 const subjectData = [
   {
     subject: "Math",
@@ -56,35 +50,44 @@ const subjectData = [
 
 const ChatgptSubject = () => {
   const [selectedSubject, setSelectedSubject] = useState("Math");
+  const navigate = useNavigate();
 
   const subjects = ["Math", "Science", "Geography", "English"];
   const filteredItems = subjectData.filter((item) => item.subject === selectedSubject);
 
   return (
-    <div className="subject-section">
+    <div className={styles.subjectSection}>
+       <div className={styles.topBar}>
+          <button className={styles.backBtn} onClick={() => navigate("/")}>
+            ← Back
+          </button>
+        </div>
       <h2>Select a Subject</h2>
-      <div className="subject-selector">
+
+      <div className={styles.subjectSelector}>
         {subjects.map((subj) => (
           <button
             key={subj}
             onClick={() => setSelectedSubject(subj)}
-            className={`subject-btn ${selectedSubject === subj ? "active" : ""}`}
+            className={`${styles.subjectBtn} ${
+              selectedSubject === subj ? styles.active : ""
+            }`}
           >
             {subj}
           </button>
         ))}
       </div>
 
-      <div className="subject-grid">
+      <div className={styles.subjectGrid}>
         {filteredItems.map((item, index) => (
-          <div className="subject-card" key={index}>
-            <div className="icon-wrapper">
-              <FontAwesomeIcon icon={item.icon} className="subject-icon" />
+          <div className={styles.subjectCard} key={index}>
+            <div className={styles.iconWrapper}>
+              <FontAwesomeIcon icon={item.icon} className={styles.subjectIcon} />
             </div>
-            <div className="subject-info">
+            <div className={styles.subjectInfo}>
               <h4>{item.title}</h4>
               <p>{item.question}</p>
-              <div className="status-tag">🧠 {item.tag}</div>
+              <div className={styles.statusTag}>🧠 {item.tag}</div>
             </div>
           </div>
         ))}

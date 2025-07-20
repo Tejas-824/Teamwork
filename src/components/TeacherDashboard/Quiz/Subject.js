@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   faClipboardList,
   faBook,
@@ -6,7 +7,7 @@ import {
   faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import './Class.css'; 
+import styles from './Subject.module.css'; 
 
 const quizData = [
   {
@@ -48,48 +49,54 @@ const quizData = [
 
 const SubjectQuiz = () => {
   const [selectedClass, setSelectedClass] = useState(6);
+  const navigate = useNavigate();
 
   const filteredQuizzes = quizData.filter(
     (quiz) => quiz.class === selectedClass
   );
 
   return (
-    <div className="dashboard-section">
+    <div className="dashboardSection">
+      <div className={styles.topBar}>
+        <button className={styles.backBtn} onClick={() => navigate("/")}>
+          ← Back
+        </button>
+      </div>
       <h2>Subject-wise Quizzes</h2>
-      <div className="class-selector">
+      <div className="classSelector">
         {[6, 7, 8, 9, 10, 11, 12].map((cls) => (
           <button
             key={cls}
             onClick={() => setSelectedClass(cls)}
-            className={`class-btn ${selectedClass === cls ? "active" : ""}`}
+            className={`classBtn ${selectedClass === cls ? "active" : ""}`}
           >
             Class {cls}
           </button>
         ))}
       </div>
 
-      <div className="quiz-grid">
+      <div className="quizGrid">
         {filteredQuizzes.length > 0 ? (
           filteredQuizzes.map((quiz, index) => (
-            <div className="quiz-card" key={index}>
-              <div className="icon-wrapper">
-                <FontAwesomeIcon icon={quiz.icon} className="quiz-icon" />
+            <div className="quizCard" key={index}>
+              <div className="iconWrapper">
+                <FontAwesomeIcon icon={quiz.icon} className="quizIcon" />
               </div>
-              <div className="quiz-info">
+              <div className="quizInfo">
                 <h4>{quiz.title}</h4>
                 <p>Subject: {quiz.subject}</p>
-                <div className="status-tag">
+                <div className="statusTag">
                   {quiz.status === "Active" ? (
-                    <span className="active-status">🟢 Active</span>
+                    <span className="activeStatus">🟢 Active</span>
                   ) : (
-                    <span className="inactive-status">🔴 Inactive</span>
+                    <span className="inactiveStatus">🔴 Inactive</span>
                   )}
                 </div>
               </div>
             </div>
           ))
         ) : (
-          <p className="no-quiz">No subject quizzes found for Class {selectedClass}</p>
+          <p className="noQuiz">No subject quizzes found for Class {selectedClass}</p>
         )}
       </div>
     </div>

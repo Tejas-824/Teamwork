@@ -1,0 +1,156 @@
+:root {
+  --primary-bg: #ffffff;
+  --secondary-bg: #f0f2f5;
+  --primary-text: #1a1a1a;
+  --secondary-text: #444;
+  --accent-color: #4a90e2;
+  --card-bg: #ffffff;
+  --border-color: #ddd;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+.dark {
+  --primary-bg: #121212;
+  --secondary-bg: #1f1f1f;
+  --primary-text: #e5e5e5;
+  --secondary-text: #aaa;
+  --accent-color: #4a90e2; /* fallback for missing --dark-blue */
+}
+
+/* Main Section */
+.chatgptClassSection {
+  padding: 20px;
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+  min-height: 100vh;
+}
+
+/* Top Bar */
+.topBar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+/* Back Button */
+.backBtn {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.backBtn:hover {
+  background-color: #0056b3;
+}
+
+/* Heading */
+.chatgptClassSection h2 {
+  text-align: center;
+  color: var(--accent-color);
+  margin-top: 1rem;
+  font-size: 1.8rem;
+}
+
+/* Class Button Container */
+.classSelector {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 1rem 0;
+}
+
+/* Class Buttons */
+.classBtn {
+  padding: 10px 20px;
+  border: 2px solid var(--accent-color);
+  background-color: transparent;
+  color: var(--accent-color);
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.classBtn:hover,
+.classBtnActive {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+/* Dark mode for buttons */
+.dark .classBtn {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.dark .classBtn:hover,
+.dark .classBtnActive {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+/* Grid for Feature Cards */
+.chatgptFeatureGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+/* Feature Card */
+.chatgptFeatureCard {
+  background-color: var(--card-bg);
+  box-shadow: 0 2px 8px var(--shadow-color);
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.chatgptFeatureCard:hover {
+  transform: translateY(-4px);
+}
+
+/* Icon */
+.iconWrapper {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: var(--accent-color);
+}
+
+/* Feature Info */
+.featureInfo h4 {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.statusTag {
+  display: inline-block;
+  margin-top: 8px;
+  background-color: #e5e5e5;
+  color: #333;
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .chatgptFeatureGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .topBar {
+    justify-content: center;
+  }
+
+  .backBtn {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+}

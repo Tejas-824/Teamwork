@@ -1,40 +1,25 @@
 import { useState, useRef, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import Calendar from 'react-calendar';
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faSearch,
-  faBars,
-  faBell,
-  faChalkboardTeacher,
-  faVideo,
-  faBookOpen,
-  faFileAlt,
-  faQuestionCircle,
-  faComments,
-  faUser,
-  faCogs,
-  faSignOutAlt,
-  faChevronDown,
-  faChevronUp,
-  faGraduationCap,
-  faBook,
-  faSchool,
-  faBuildingColumns,
-  faUserEdit
+  faSearch, faBars, faBell, faChalkboardTeacher,
+  faVideo, faFileAlt, faQuestionCircle, faUser, faCogs, faSignOutAlt,
+  faChevronDown, faChevronUp, faGraduationCap, faBook, faSchool,
+  faBuildingColumns, faUserEdit, faFolderOpen, faChartLine, faUsers
 } from "@fortawesome/free-solid-svg-icons";
 import logoImg from "../../assets/logo.jpg";
 
-import ClassQuiz from "./Quiz/ClassQuiz";
-import ClassSubject from "./Quiz/ClassSubject";
-import ClassDoubt from './DoubtSession/Class'; 
-import SubjectDoubt from './DoubtSession/Subject';
-import ChatGptClass from './ChatGpt/Class';
-import ChatGptSubject from './ChatGpt/Subject';
+import QuizClassOverview from './Quiz/Class';
+import QuizSubjectOverview from './Quiz/Subject';
+import ClassDoubtSession from './DoubtSession/Class';
+import SubjectDoubtSession from './DoubtSession/Subject';
+import ClassPerformance from './Performance/Class';
+import SubjectPerformance from './Performance/Subject';
 
-import styles from "./Dashboard.module.css";
+import styles from "./Admin.module.css";
 
-const StudentDashboard = () => {
+const AdminDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
@@ -42,10 +27,10 @@ const StudentDashboard = () => {
   const [studyMaterialMenuOpen, setStudyMaterialMenuOpen] = useState(false);
   const [quizMenuOpen, setQuizMenuOpen] = useState(false);
   const [doubtMenuOpen, setDoubtMenuOpen] = useState(false);
-  const [chatgptMenuOpen, setChatgptMenuOpen] = useState(false);
+  const [performanceMenuOpen, setPerformanceMenuOpen] = useState(false);
+  const [ChatgptMenuOpen, setChatgptMenuOpen] = useState(false);
 
   const sidebarRef = useRef(null);
-  const [date, setDate] = useState(new Date());
 
   const closeSidebar = () => {
     setSidebarOpen(false);
@@ -57,9 +42,9 @@ const StudentDashboard = () => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        closeSidebar();
+        setSidebarOpen(false);
       }
-      if (!event.target.closest(`.${styles.profileDropdown}`)) {
+      if (!event.target.closest(".profile-dropdown")) {
         setDropdownOpen(false);
       }
     };
@@ -71,47 +56,42 @@ const StudentDashboard = () => {
     };
   }, []);
 
-  const handleHamburgerTouch = (event) => {
-    event.stopPropagation(); // Prevent touchstart from closing sidebar immediately
-    setSidebarOpen(!sidebarOpen);
-  };
-
   return (
     <div className={styles.dashboardContainer}>
       <header className={styles.dashboardHeader}>
-        <button
-          className={styles.hamburgerButton}
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          onTouchStart={handleHamburgerTouch}
-          aria-label="Toggle Sidebar"
-        >
-          <FontAwesomeIcon icon={faBars} />
-        </button>
+        <div className={styles.leftHeaderSection}>
+          <button className={styles.hamburgerButton} onClick={() => setSidebarOpen(!sidebarOpen)}>
+            <FontAwesomeIcon icon={faBars} />
+          </button>
 
-        <div className={styles.logoContainer}>
-          <img src={logoImg} alt="LGA Logo" />
-          <span className={styles.logoTitle}>
-            <span className={styles.black}>Learning</span>
-            <span className={styles.blue}>Guide</span>
-            <span className={styles.black}> { 'Academy'}</span>
-          </span>
+          <div className={styles.logoContainer}>
+            <img src={logoImg} alt="LGA Logo" />
+            <span className={styles.logoTitle}>
+              <span className={styles.black}>Learning</span>
+              <span className={styles.blue}>Guide</span>
+              <span className={styles.black}> Academy</span>
+            </span>
+          </div>
         </div>
 
         <div className={styles.headerControls}>
           <button className={styles.searchButton}>
             <FontAwesomeIcon icon={faSearch} /> Search
           </button>
+
           <button className={styles.notificationButton}>
             <FontAwesomeIcon icon={faBell} />
             <span className={styles.badge}></span>
           </button>
-          <div className={styles.profileDropdown}>
+
+          <div className={`${styles.profileDropdown} profile-dropdown`}>
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0JFHKoXSA92jzBf-BYa933eKKpJcj2JxRLpb7O_3zWBT3Aeh5IQrzyjo3SaXiwYKaRxI&usqp=CAU"
               alt="User"
               className={styles.profileAvatar}
               onClick={() => setDropdownOpen(!dropdownOpen)}
             />
+
             {dropdownOpen && (
               <ul className={styles.dropdownMenu}>
                 <li><FontAwesomeIcon icon={faUser} /> View Profile</li>
@@ -125,11 +105,8 @@ const StudentDashboard = () => {
       </header>
 
       <div className={styles.mainContent}>
-        <aside
-          ref={sidebarRef}
-          className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : ""}`}
-        >
-          <h2 className={styles.sidebarSubtitle}>Student Dashboard</h2>
+        <aside ref={sidebarRef} className={`${styles.sidebar} ${sidebarOpen ? styles.open : ""}`}>
+          <h2 className={styles.sidebarSubtitle}>Admin Dashboard</h2>
 
           {/* My Class */}
           <div className={styles.navItem} onClick={() => setSubmenuOpen(!submenuOpen)}>
@@ -159,13 +136,20 @@ const StudentDashboard = () => {
 
           {/* Study Material */}
           <div className={styles.navItem} onClick={() => setStudyMaterialMenuOpen(!studyMaterialMenuOpen)}>
-            <FontAwesomeIcon icon={faBookOpen} className={styles.icon} /> Study Material
+            <FontAwesomeIcon icon={faFolderOpen} className={styles.icon} /> Study Material
             <FontAwesomeIcon icon={studyMaterialMenuOpen ? faChevronUp : faChevronDown} className={styles.arrow} />
           </div>
           {studyMaterialMenuOpen && (
             <div className={styles.submenu}>
-              <div className={styles.submenuItem}><FontAwesomeIcon icon={faGraduationCap} className={styles.icon} /> Class</div>
-              <div className={styles.submenuItem}><FontAwesomeIcon icon={faBook} className={styles.icon} /> Subject</div>
+              <div className={styles.submenuItem}>
+                <FontAwesomeIcon icon={faGraduationCap} className={styles.icon} /> Class
+              </div>
+              <div className={styles.submenuItem}>
+                <FontAwesomeIcon icon={faBook} className={styles.icon} /> Subject
+              </div>
+              <div className={styles.submenuItem}>
+                <FontAwesomeIcon icon={faBook} className={styles.icon} /> Pdf
+              </div>
             </div>
           )}
 
@@ -176,10 +160,10 @@ const StudentDashboard = () => {
           </div>
           {quizMenuOpen && (
             <div className={styles.submenu}>
-              <Link to="/quiz" className={styles.submenuItem} onClick={closeSidebar}>
+              <Link to="/quiz/class" className={styles.submenuItem} onClick={closeSidebar}>
                 <FontAwesomeIcon icon={faGraduationCap} className={styles.icon} /> Class
               </Link>
-              <Link to="/subject" className={styles.submenuItem} onClick={closeSidebar}>
+              <Link to="/quiz/subject" className={styles.submenuItem} onClick={closeSidebar}>
                 <FontAwesomeIcon icon={faBook} className={styles.icon} /> Subject
               </Link>
             </div>
@@ -201,18 +185,18 @@ const StudentDashboard = () => {
             </div>
           )}
 
-          {/* ChatGPT */}
-          <div className={styles.navItem} onClick={() => setChatgptMenuOpen(!chatgptMenuOpen)}>
-            <FontAwesomeIcon icon={faComments} className={styles.icon} /> ChatGPT
-            <FontAwesomeIcon icon={chatgptMenuOpen ? faChevronUp : faChevronDown} className={styles.arrow} />
+          {/* Performance check */}
+          <div className={styles.navItem} onClick={() => setPerformanceMenuOpen(!performanceMenuOpen)}>
+            <FontAwesomeIcon icon={faChartLine} className={styles.icon} /> Performance Check
+            <FontAwesomeIcon icon={performanceMenuOpen ? faChevronUp : faChevronDown} className={styles.arrow} />
           </div>
-          {chatgptMenuOpen && (
+          {performanceMenuOpen && (
             <div className={styles.submenu}>
-              <Link to="/chatgpt/class" className={styles.submenuItem} onClick={closeSidebar}>
-                <FontAwesomeIcon icon={faGraduationCap} className={styles.icon} /> Class
+              <Link to="/performance/subject" className={styles.submenuItem} onClick={closeSidebar}>
+                <FontAwesomeIcon icon={faGraduationCap} className={styles.icon} /> Student
               </Link>
-              <Link to="/chatgpt/subject" className={styles.submenuItem} onClick={closeSidebar}>
-                <FontAwesomeIcon icon={faBook} className={styles.icon} /> Subject
+              <Link to="/performance/class" className={styles.submenuItem} onClick={closeSidebar}>
+                <FontAwesomeIcon icon={faUsers} className={styles.icon} /> Class
               </Link>
             </div>
           )}
@@ -226,82 +210,92 @@ const StudentDashboard = () => {
                 <div className={styles.dashboardMain}>
                   <div className={styles.welcomeSection}>
                     <div className={styles.welcomeText}>
-                      <h2>Welcome back, Student!</h2>
+                      <h2>Welcome back, Admin!</h2>
                       <p>Start exploring your subjects and lessons to continue your journey of learning.</p>
                     </div>
                     <div className={styles.welcomeImage}>
                       <img
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_85t0H4sD9dihzdpaaKtezIpBhE16Mjhipg&s"
-                        alt="Welcome Illustration"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2G61LLE3MWiaLwlzdyq2L-6m9Vc2tkAcR_A&s"
+                        alt="Admin image"
                       />
                     </div>
                   </div>
 
-                  {/* Stats Section */}
-                  <div className={styles.statsSection}>
-                    <div className={styles.statBox}>
-                      <span className={styles.statIcon}>🏫</span>
-                      <div className={styles.statInfo}>
-                        <div className={styles.statNumber}>35</div>
-                        <div className={styles.statLabel}>Schools</div>
+                  <div className={styles.dashboardContainer}>
+                    {/* Stats Grid */}
+                    <div className={styles.statsGrid}>
+                      <div className={styles.statCard}>
+                        <h3>Active Users</h3>
+                        <p>1,245</p>
                       </div>
-                    </div>
-                    <div className={styles.statBox}>
-                      <span className={styles.statIcon}>👩‍🏫</span>
-                      <div className={styles.statInfo}>
-                        <div className={styles.statNumber}>200</div>
-                        <div className={styles.statLabel}>Teachers</div>
+                      <div className={styles.statCard}>
+                        <h3>Scores Created</h3>
+                        <p>320</p>
                       </div>
-                    </div>
-                    <div className={styles.statBox}>
-                      <span className={styles.statIcon}>🎓</span>
-                      <div className={styles.statInfo}>
-                        <div className={styles.statNumber}>1000</div>
-                        <div className={styles.statLabel}>Students</div>
+                      <div className={styles.statCard}>
+                        <h3>Avg. Session</h3>
+                        <p>38 mins</p>
                       </div>
-                    </div>
-                  </div>
-
-                  {/* Attendance */}
-                  <div className={styles.bottomSection}>
-                    <div className={`${styles.sectionBox} ${styles.attendance}`}>
-                      <h3>Attendance</h3>
-                      <Calendar
-                        onChange={setDate}
-                        value={date}
-                        className={styles.customCalendar}
-                      />
-                      <p className={styles.selectedDate}>Selected Date: {date.toDateString()}</p>
+                      <div className={styles.statCard}>
+                        <h3>Assignments Submitted</h3>
+                        <p>1,024</p>
+                      </div>
                     </div>
 
-                    {/* Activities */}
-                    <div className={`${styles.sectionBox} ${styles.activitiesSection}`}>
-                      <div className={styles.activitiesHeader}>
-                        <h3>Activities and Events</h3>
-                        <button className={styles.viewAllButton}>View All</button>
+                    {/* Assignments & Performance Section */}
+                    <div className={styles.mainContentRow}>
+                      <div className={styles.assignmentContainer}>
+                        <div className={styles.assignmentHeader}>
+                          <h3>New Assignments</h3>
+                          <p>Last 7 Days</p>
+                        </div>
+                        <div className={styles.progressBarSection}>
+                          <div className={styles.progressItem}>
+                            <p>Worksheets</p>
+                            <div className={styles.progressBar}><div className={styles.fill} style={{ width: "70%" }} /></div>
+                          </div>
+                          <div className={styles.progressItem}>
+                            <p>Performance</p>
+                            <div className={styles.progressBar}><div className={styles.fill} style={{ width: "85%" }} /></div>
+                          </div>
+                        </div>
                       </div>
-                      <ul className={styles.activitiesList}>
-                        <li>Science Fair for Classes 6-8</li>
-                        <li>Math Olympiad for Classes 9-10</li>
-                        <li>Art Competition for Classes 6-12</li>
-                        <li>Sports Day - Inter-school</li>
-                      </ul>
+
+                      {/* Circular Progress */}
+                      <div className={styles.circularProgressContainer}>
+                        <h3>Assignment Success</h3>
+                        <p>Last 7 Days</p>
+                        <div className={styles.circleWrapper}>
+                          <div className={styles.circleOuter}>
+                            <div className={styles.circleInner}>90%</div>
+                          </div>
+                        </div>
+                        <p className={styles.positiveGradeLabel}>Positive Grades</p>
+                      </div>
+                    </div>
+
+                    {/* Quick Actions */}
+                    <div className={styles.quickActions}>
+                      <button className={styles.actionButton}>Add Teacher</button>
+                      <button className={styles.actionButton}>Remove Student</button>
+                      <button className={styles.actionButton}>Send Notification</button>
+                      <button className={styles.actionButton}>Create Assignment</button>
                     </div>
                   </div>
                 </div>
               }
             />
-            <Route path="quiz" element={<ClassQuiz />} />
-            <Route path="subject" element={<ClassSubject />} />
-            <Route path="/doubt/class" element={<ClassDoubt />} />
-            <Route path="/doubt/subject" element={<SubjectDoubt />} />
-            <Route path="/chatgpt/class" element={<ChatGptClass />} />
-            <Route path="/chatgpt/subject" element={<ChatGptSubject />} />
+            <Route path="/quiz/class" element={<QuizClassOverview />} />
+            <Route path="/quiz/subject" element={<QuizSubjectOverview />} />
+            <Route path="/doubt/class" element={<ClassDoubtSession />} />
+            <Route path="/doubt/subject" element={<SubjectDoubtSession />} />
+            <Route path="/performance/class" element={<ClassPerformance />} />
+            <Route path="/performance/subject" element={<SubjectPerformance />} />
           </Routes>
         </main>
       </div>
     </div>
-  ); 
+  );
 };
 
-export default StudentDashboard;
+export default AdminDashboard;

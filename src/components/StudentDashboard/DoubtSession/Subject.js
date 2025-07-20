@@ -1,12 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   faCalculator,
   faFlask,
   faBook,
-  faQuestionCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./Subject.css";
+import styles from "./Subject.module.css";
 
 const subjectDoubts = {
   Math: [
@@ -55,19 +55,25 @@ const subjectDoubts = {
 
 const SubjectDoubt = () => {
   const [selectedSubject, setSelectedSubject] = useState("Math");
-
+  const navigate = useNavigate();
   const doubts = subjectDoubts[selectedSubject];
 
   return (
-    <div className="subject-doubt-section">
-      <h2>Choose a Subject</h2>
-      <div className="subject-selector">
+    <div className={styles.subjectDoubtSection}>
+      <div className={styles.topBar}>
+        <button className={styles.backBtn} onClick={() => navigate("/")}>
+          ← Back
+        </button>
+      </div>
+      <h2 className={styles.heading}>Choose a Subject</h2>
+
+      <div className={styles.subjectSelector}>
         {Object.keys(subjectDoubts).map((subject) => (
           <button
             key={subject}
             onClick={() => setSelectedSubject(subject)}
-            className={`subject-btn ${
-              selectedSubject === subject ? "active" : ""
+            className={`${styles.subjectBtn} ${
+              selectedSubject === subject ? styles.active : ""
             }`}
           >
             {subject}
@@ -75,20 +81,20 @@ const SubjectDoubt = () => {
         ))}
       </div>
 
-      <div className="doubt-grid">
+      <div className={styles.doubtGrid}>
         {doubts.map((doubt, index) => (
-          <div className="doubt-card" key={index}>
-            <div className="icon-wrapper">
-              <FontAwesomeIcon icon={doubt.icon} className="doubt-icon" />
+          <div className={styles.doubtCard} key={index}>
+            <div className={styles.iconWrapper}>
+              <FontAwesomeIcon icon={doubt.icon} className={styles.doubtIcon} />
             </div>
-            <div className="doubt-info">
+            <div className={styles.doubtInfo}>
               <h4>{doubt.title}</h4>
               <p>{doubt.question}</p>
-              <div className="status-tag">
+              <div className={styles.statusTag}>
                 {doubt.tag === "Resolved" ? (
-                  <span className="resolved">✔ Resolved</span>
+                  <span className={styles.resolved}>✔ Resolved</span>
                 ) : (
-                  <span className="unresolved">⚠ Unresolved</span>
+                  <span className={styles.unresolved}>⚠ Unresolved</span>
                 )}
               </div>
             </div>

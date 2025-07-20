@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   faChalkboardTeacher,
   faQuestion,
@@ -6,7 +7,7 @@ import {
   faBookOpen,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import './Class.css'; 
+import styles from './Class.module.css';
 
 const doubtData = [
   {
@@ -48,46 +49,51 @@ const doubtData = [
 
 const ClassDoubt = () => {
   const [selectedClass, setSelectedClass] = useState(6);
-
+  const navigate = useNavigate();
   const filteredDoubts = doubtData.filter((item) => item.class === selectedClass);
 
   return (
-    <div className="doubt-section">
+    <div className={styles.doubtSection}>
+      <div className={styles.topBar}>
+        <button className={styles.backBtn} onClick={() => navigate("/")}>
+          ← Back
+        </button>
+      </div>
       <h2>Select Your Class</h2>
-      <div className="class-selector">
+      <div className={styles.classSelector}>
         {[6, 7, 8, 9, 10, 11, 12].map((cls) => (
           <button
             key={cls}
             onClick={() => setSelectedClass(cls)}
-            className={`class-btn ${selectedClass === cls ? "active" : ""}`}
+            className={`${styles.classBtn} ${selectedClass === cls ? styles.active : ""}`}
           >
             Class {cls}
           </button>
         ))}
       </div>
 
-      <div className="doubt-grid">
+      <div className={styles.doubtGrid}>
         {filteredDoubts.length > 0 ? (
           filteredDoubts.map((doubt, index) => (
-            <div className="doubt-card" key={index}>
-              <div className="icon-wrapper">
-                <FontAwesomeIcon icon={doubt.icon} className="doubt-icon" />
+            <div className={styles.doubtCard} key={index}>
+              <div className={styles.iconWrapper}>
+                <FontAwesomeIcon icon={doubt.icon} className={styles.doubtIcon} />
               </div>
-              <div className="doubt-info">
+              <div className={styles.doubtInfo}>
                 <h4>{doubt.title}</h4>
                 <p>{doubt.question}</p>
-                <div className="status-tag">
+                <div className={styles.statusTag}>
                   {doubt.tag === "Resolved" ? (
-                    <span className="resolved">✔ Resolved</span>
+                    <span className={styles.resolved}>✔ Resolved</span>
                   ) : (
-                    <span className="unresolved">⚠ Unresolved</span>
+                    <span className={styles.unresolved}>⚠ Unresolved</span>
                   )}
                 </div>
               </div>
             </div>
           ))
         ) : (
-          <p className="no-doubt">No doubts found for Class {selectedClass}</p>
+          <p className={styles.noDoubt}>No doubts found for Class {selectedClass}</p>
         )}
       </div>
     </div>

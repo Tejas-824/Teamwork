@@ -1,12 +1,8 @@
 import { useState } from "react";
-import {
-  faQuestion,
-  faBookOpen,
-  faComments,
-  faChalkboardTeacher,
-} from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import { faQuestion, faBookOpen, faComments, faChalkboardTeacher,faLightbulb } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./Class.css";
+import styles from  "./Class.module.css";
 
 const doubtData = [
   {
@@ -44,52 +40,73 @@ const doubtData = [
     icon: faBookOpen,
     tag: "Unresolved",
   },
+  {
+    class: 10,
+    title: "Biology Doubt",
+    question: "Difference between arteries and veins?",
+    icon: faLightbulb,
+    tag: "Resolved",
+  },
+  {
+    class: 12,
+    title: "Chemistry Doubt",
+    question: "Why does ionic bonding occur?",
+    icon: faLightbulb,
+    tag: "Unresolved",
+  },
 ];
 
 const ClassDoubtSession = () => {
   const [selectedClass, setSelectedClass] = useState(6);
+  const navigate = useNavigate();
 
   const filteredDoubts = doubtData.filter(
     (item) => item.class === selectedClass
   );
 
   return (
-    <div className="dashboard-section">
+    <div className={styles.dashboardSection}>
+      <div className={styles.topBar}>
+        <button className={styles.backBtn} onClick={() => navigate("/")}>
+          ← Back
+        </button>
+      </div>
       <h2>Class-wise Doubt Sessions</h2>
-      <div className="class-selector">
+
+      <div className={styles.classSelector}>
         {[6, 7, 8, 9, 10, 11, 12].map((cls) => (
           <button
             key={cls}
             onClick={() => setSelectedClass(cls)}
-            className={`class-btn ${selectedClass === cls ? "active" : ""}`}
+            className={`${styles.classBtn} ${selectedClass === cls ? styles.active : ""}`}
           >
             Class {cls}
           </button>
         ))}
       </div>
 
-      <div className="quiz-grid">
+      <div className={styles.quizGrid}>
         {filteredDoubts.length > 0 ? (
           filteredDoubts.map((doubt, index) => (
-            <div className="quiz-card" key={index}>
-              <div className="icon-wrapper">
-                <FontAwesomeIcon icon={doubt.icon} className="quiz-icon" />
+            <div className={styles.quizCard} key={index}>
+              <div className={styles.iconWrapper}>
+                <FontAwesomeIcon icon={doubt.icon} />
               </div>
-              <div className="quiz-info">
+              <div className={styles.quizInfo}>
                 <h4>{doubt.title}</h4>
                 <p>Q: {doubt.question}</p>
-                <div className="status-tag">
+                <div className={styles.statusTag}>
                   {doubt.tag === "Resolved" ? (
-                    <span className="active-status">✔ Resolved</span>
+                    <span className={styles.activeStatus}>✔ Resolved</span>
                   ) : (
-                    <span className="inactive-status">⚠ Unresolved</span>
+                    <span className={styles.inactiveStatus}>⚠ Unresolved</span>
                   )}
                 </div>
               </div>
             </div>
           ))
         ) : (
-          <p className="no-quiz">No doubts found for Class {selectedClass}</p>
+          <p className={styles.noQuiz}>No doubts found for Class {selectedClass}</p>
         )}
       </div>
     </div>
